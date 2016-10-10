@@ -28,6 +28,9 @@ const store = new Vuex.Store({
       fetchNewsList(ids).then(news => {
         commit('SET_NEWS', { news })
       })
+    },
+    GO_TO_PAGE: ({ commit }, page) => {
+      commit('SET_PAGE', { page })
     }
   },
 
@@ -37,6 +40,9 @@ const store = new Vuex.Store({
     },
     SET_NEWS (state, { news }) {
       state.news = news
+    },
+    SET_PAGE (state, { page }) {
+      state.currentPage = page
     }
   },
 

@@ -12,7 +12,6 @@ export function fetchNewsIdList () {
 }
 
 export function fetchNews (id) {
-  console.log(id)
   return new Promise((resolve, reject) => {
     if (store.state.newsCache[id]) {
       resolve(store.state.newsCache[id])

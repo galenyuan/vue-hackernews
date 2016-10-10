@@ -5,6 +5,10 @@ import Vue from 'vue'
 import router from './router'
 import App from './App'
 import store from './store'
+import { domain, fromNow } from './filters'
+
+Vue.filter('fromNow', fromNow)
+Vue.filter('domain', domain)
 
 const app = new Vue({
   router,
