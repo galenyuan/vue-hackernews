@@ -16,7 +16,8 @@
 </template>
 
 <style lang="scss">
-  @import './assets//sass/global';
+  @import './assets/sass/global';
+  @import './assets/sass/utils/nprogress';
   @import './assets/sass/utils/flexbox';
   @import './assets/sass/utils/variables';
   

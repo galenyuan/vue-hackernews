@@ -1,12 +1,13 @@
 import Firebase from 'firebase'
 import store from '../store'
+import promise from './Promise'
 
 const api = new Firebase('https://hacker-news.firebaseio.com/v0')
 
 export function fetchNewsIdList () {
-  return new Promise((resolve, reject) => {
+  return promise((resolve, reject) => {
     if (store.state.ids.length) {
-      return store.state.ids
+      resolve(store.state.ids)
     } else {
       api.child('topstories').on('value', snapshot => {
         resolve(snapshot.val())
@@ -16,7 +17,7 @@ export function fetchNewsIdList () {
 }
 
 export function fetchNews (id) {
-  return new Promise((resolve, reject) => {
+  return promise((resolve, reject) => {
     if (store.state.newsCache[id]) {
       resolve(store.state.newsCache[id])
     } else {
