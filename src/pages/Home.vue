@@ -1,42 +1,25 @@
 <template>
   <div class="news-list">
-    <news></news>
-    <a href="javascript:;" @click="next">Next</a>
+    <news :page="this.$route.params.page"></news>
+    <router-link v-show="$route.params.page > 1" :to="{ name:'news', params: { page: parseInt($route.params.page) - 1 } }">&lt; Prev</router-link>
+    <router-link :to="{ name:'news', params: { page: parseInt($route.params.page) + 1 } }">Next &gt;</router-link>
   </div>
 </template>
 
 <script>
 import { fetchNewsIdList } from '../services/News'
 import News from '../components/News'
+import store from '../store'
 
 export default {
-  data () {
-    return {
-      msg: 'Home Page'
-    }
-  },
-
   created () {
-  	this.$store.dispatch('FETCH_ID_DATA', () => {
-      this.$store.dispatch('FETCH_ACTIVE_NEWS')
+    this.$store.dispatch('FETCH_ID_DATA').then(() => {
+      this.$store.dispatch('FETCH_ACTIVE_NEWS', this.$route.params.page)
     })
   },
-
-  computed: {
-    currentPage () {
-      return this.$store.state.currentPage
-    }
-  },
-
   watch: {
-    currentPage (val) {
-      this.$store.dispatch('FETCH_ACTIVE_NEWS')
-    }
-  },
-
-  methods: {
-    next () {
-      this.$store.dispatch('GO_TO_PAGE', this.currentPage + 1)
+    '$route.params.page' (val) {
+      this.$store.dispatch('FETCH_ACTIVE_NEWS', val)
     }
   },
 

@@ -5,9 +5,13 @@ const api = new Firebase('https://hacker-news.firebaseio.com/v0')
 
 export function fetchNewsIdList () {
   return new Promise((resolve, reject) => {
-    api.child('topstories').on('value', snapshot => {
-      resolve(snapshot.val())
-    }, reject)
+    if (store.state.ids.length) {
+      return store.state.ids
+    } else {
+      api.child('topstories').on('value', snapshot => {
+        resolve(snapshot.val())
+      }, reject)
+    }
   })
 }
 

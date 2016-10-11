@@ -14,16 +14,18 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    FETCH_ID_DATA: ({ commit }, callback) => {
-      fetchNewsIdList().then(ids => {
-        commit('SET_IDS', { ids })
-        if (callback) callback()
+    FETCH_ID_DATA: ({ commit }) => {
+      return new Promise((resolve, reject) => {
+        fetchNewsIdList().then(ids => {
+          commit('SET_IDS', { ids })
+          resolve()
+        })
       })
     },
-    FETCH_ACTIVE_NEWS: ({ commit }) => {
+    FETCH_ACTIVE_NEWS: ({ commit }, page) => {
       const state = store.state
-      const start = (state.currentPage - 1) * state.itemsPerPage
-      const end = state.currentPage * state.itemsPerPage
+      const start = (page - 1) * state.itemsPerPage
+      const end = page * state.itemsPerPage
       const ids = state.ids.slice(start, end)
       fetchNewsList(ids).then(news => {
         commit('SET_NEWS', { news })
@@ -43,28 +45,6 @@ const store = new Vuex.Store({
     },
     SET_PAGE (state, { page }) {
       state.currentPage = page
-    }
-  },
-
-  getters: {
-    // ids of the items that should be currently displayed based on
-    // current list type and current pagination
-    activeIds (state) {
-      const { activeType, itemsPerPage, lists } = state
-      const page = Number(state.route.params.page) || 1
-      if (activeType) {
-        const start = (page - 1) * itemsPerPage
-        const end = page * itemsPerPage
-        return lists[activeType].slice(start, end)
-      } else {
-        return []
-      }
-    },
-
-    // items that should be currently displayed.
-    // this Array may not be fully fetched.
-    activeItems (state, getters) {
-      return getters.activeIds.map(id => state.items[id]).filter(_ => _)
     }
   }
 })

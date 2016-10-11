@@ -3,7 +3,7 @@
     <header>
       <div class="header-logo">
         <a href="http://www.ycombinator.com"><img src="https://news.ycombinator.com/y18.gif"></a>
-        <h1><a href="/">Hacker News</a></h1>
+        <h1><router-link :to="{ name: 'home' }">Hacker News</router-link></h1>
       </div>
       <div class="header-description">
         <span>Built with Vue.js</span>

@@ -8,12 +8,11 @@
 	import NewsItem from './NewsItem'
 
 	export default {
+		props: ['page'],
+
 		computed: {
 			newsList () {
 				return this.$store.state.news
-			},
-			currentPage () {
-				return this.$store.state.currentPage
 			},
 			itemsPerPage () {
 				return this.$store.state.itemsPerPage
@@ -22,7 +21,7 @@
 
 		methods: {
 	    formatItemIndex (index) {
-	      return (this.currentPage - 1) * this.itemsPerPage + index + 1
+	      return (this.page - 1) * this.itemsPerPage + index + 1
 	    }
 	  },
 

@@ -5,7 +5,10 @@
 			<a class="news-item-title" :href="news.url" target="_blank">{{news.title}}</a>
 			<span class="news-item-url">({{news.url | domain}})</span>
 		</p>
-		<p class="subtext">{{news.score}} points by {{news.by}} {{news.time | fromNow}} ago | {{news.descendants}} comments</p>
+		<p class="subtext">
+			{{news.score}} points by <router-link :to="{ name: 'user', params: {id: news.by} }">{{news.by}}</router-link>
+			{{news.time | fromNow}} ago | <router-link :to="{ name: 'comments', params: { id: news.id } }">{{news.descendants}} comments</router-link>
+		</p>
 	</div>
 </template>
 
@@ -34,10 +37,6 @@
 			}
 			.news-item-url {
 				color: $greyFontColor;
-			}
-			&.subtext {
-				color: $greyFontColor;
-				font-size: .8rem;
 			}
 		}
 	}
